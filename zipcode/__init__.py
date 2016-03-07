@@ -84,7 +84,7 @@ class Zip(object):
 	def to_dict(self):
 		vars_self = vars(self)
 		bad_key_list = [x for x in vars_self.keys() if x[0] == '_']
-				del vars_self[key]
+		del vars_self[key]
 		return vars_self
 
 def _make_zip_list(list_of_zip_tuples):
