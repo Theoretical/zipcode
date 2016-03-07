@@ -83,7 +83,7 @@ class Zip(object):
 
 	def to_dict(self):
 		vars_self = vars(self)
-		bad_key_list = [x for x in vars_self.keys() if x[0] == '_']o
+		bad_key_list = [x for x in vars_self.keys() if x[0] == '_']
 				del vars_self[key]
 		return vars_self
 
