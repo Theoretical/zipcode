@@ -83,9 +83,7 @@ class Zip(object):
 
 	def to_dict(self):
 		vars_self = vars(self)
-		bad_key_list = [x for x in vars_self.keys() if x[0] == '_']
-		for key in vars_self.keys():
-			if key in bad_key_list:
+		bad_key_list = [x for x in vars_self.keys() if x[0] == '_']o
 				del vars_self[key]
 		return vars_self
 
@@ -104,10 +102,12 @@ def _validate(zipcode):
 	return True
 
 def islike(zipcode):
-	"""Takes a partial zip code and returns a list of zipcode objects with matching prefixes."""
-	_validate(zipcode)
-	_cur.execute('SELECT * FROM ZIPS WHERE ZIP_CODE LIKE ?', ['{zipcode}%'.format(zipcode=str(zipcode))])
-	return _make_zip_list(_cur.fetchall())
+    """Takes a partial zip code and returns a list of zipcode objects with matching prefixes."""
+    _validate(zipcode)
+    connection = db.connect(_zipcodedb_location,  check_same_thread=False)
+    cur = connection.cursor()
+    cur.execute('SELECT * FROM ZIPS WHERE ZIP_CODE LIKE ?', ['{zipcode}%'.format(zipcode=str(zipcode))])
+    return _make_zip_list(cur.fetchall())
 
 def isequal(zipcode):
 	"""Takes a zipcode and returns the matching zipcode object.  If it does not exist, None is returned"""
